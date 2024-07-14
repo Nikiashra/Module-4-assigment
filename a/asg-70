@@ -1,0 +1,181 @@
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Navigation Drawer',
+      debugShowCheckedModeBanner: false,
+      home: BottomNavigation(),
+    );
+  }
+}
+
+class BottomNavigation extends StatefulWidget {
+  const BottomNavigation({super.key});
+
+  @override
+  State<BottomNavigation> createState() => _BottomNavigationState();
+}
+
+class _BottomNavigationState extends State<BottomNavigation> {
+  int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.tealAccent,
+        title: const Text("Bottom Navigation Bar"),
+      ),
+      body: _getPage(_selectedIndex),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.audiotrack_outlined),
+              label: "Audio Page",
+              backgroundColor: Colors.lightBlue
+          ),
+
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.videocam_outlined),
+              label: "Video Page",
+              backgroundColor: Colors.lightBlue
+          ),
+
+          BottomNavigationBarItem(
+              label: "Images Page",
+              icon: Icon(Icons.image_outlined),
+              backgroundColor: Colors.lightBlue
+          ),
+        ],
+        type: BottomNavigationBarType.shifting,
+        selectedItemColor: Colors.amber,
+        iconSize: 25,
+        elevation: 5,
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+
+      ),
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return AudioPage();
+      case 1:
+        return VideoPage();
+      case 2:
+        return ImagesPage();
+      default:
+        return const Center(
+          child: Text('Page not found'),
+        );
+
+    }
+  }
+}
+class ImagesPage extends StatelessWidget {
+  const ImagesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Dummy image data
+    final List<Map<String, String>> imageData = [
+      {"title": "Image 1", "description": "Description 1"},
+      {"title": "Image 2", "description": "Description 2"},
+      {"title": "Image 3", "description": "Description 3"},
+      {"title": "Image 4", "description": "Description 4"},
+      {"title": "Image 5", "description": "Description 5"},
+    ];
+
+    return ListView.builder(
+      itemCount: imageData.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Icon(Icons.image, color: Colors.teal),
+          title: Text(imageData[index]['title']!,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          subtitle: Text(imageData[index]['description']!,
+              style: TextStyle(fontSize: 16, color: Colors.grey)),
+        );
+      },
+    );
+  }
+}
+class AudioPage extends StatelessWidget {
+  const AudioPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Dummy audio data
+    final List<Map<String, String>> audioData = [
+      {"title": "Song 1", "artist": "Artist 1"},
+      {"title": "Song 2", "artist": "Artist 2"},
+      {"title": "Song 3", "artist": "Artist 3"},
+      {"title": "Song 4", "artist": "Artist 4"},
+      {"title": "Song 5", "artist": "Artist 5"},
+    ];
+
+    return ListView.builder(
+      itemCount: audioData.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Icon(Icons.music_note, color: Colors.teal),
+          title: Text(audioData[index]['title']!,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          subtitle: Text(audioData[index]['artist']!,
+              style: TextStyle(fontSize: 16, color: Colors.grey)),
+        );
+      },
+    );
+  }
+}
+
+class VideoPage extends StatelessWidget {
+  const VideoPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Dummy video data
+    final List<Map<String, String>> videoData = [
+      {"title": "Video 1", "description": "Description 1"},
+      {"title": "Video 2", "description": "Description 2"},
+      {"title": "Video 3", "description": "Description 3"},
+      {"title": "Video 4", "description": "Description 4"},
+      {"title": "Video 5", "description": "Description 5"},
+    ];
+
+    return ListView.builder(
+      itemCount: videoData.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Icon(Icons.videocam, color: Colors.teal),
+          title: Text(videoData[index]['title']!,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          subtitle: Text(videoData[index]['description']!,
+              style: TextStyle(fontSize: 16, color: Colors.grey)),
+        );
+      },
+    );
+  }
+}
+
+
+
