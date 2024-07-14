@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home:CitySelection(),
+    );
+  }
+}
+class CitySelection extends StatefulWidget {
+  const CitySelection({super.key});
+
+  @override
+  State<CitySelection> createState() => _CitySelectionState();
+}
+
+class _CitySelectionState extends State<CitySelection>
+{
+  String _selectedCity = '';
+
+  final List<String> _cities = ['India', 'Nepal', 'Bhutan', 'USA', 'Sri lanka', 'Melbourne', 'Africa'];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('City Selection'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: (){
+            _showCitySelectionDialog(context);
+          },
+          child: const Text('Select City'),
+        ),
+      ),
+    );
+  }
+  void _showCitySelectionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Select a City'),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _cities.length,
+              itemBuilder: (BuildContext context, int index) {
+                return RadioListTile(
+                  title: Text(_cities[index]),
+                  value: _cities[index],
+                  groupValue: _selectedCity,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _selectedCity = value!;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          ),
+          actions: <Widget>[
+          ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+            ),
+          ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(_selectedCity);
+          },
+          child: Text('OK'),
+             ),
+           ],
+          );
+        },
+    );
+  }
+}
+
+
+
