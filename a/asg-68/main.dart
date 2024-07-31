@@ -17,14 +17,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home:const HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
-
 class HomePage extends StatefulWidget {
-
   const HomePage({super.key});
 
   @override
@@ -32,12 +30,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController contactController = TextEditingController();
 
-  List<Contact> contacts = List.empty(growable :true);
-
+  List<Contact> contacts = List.empty(growable: true);
 
   @override
   Widget build(BuildContext context) {
@@ -49,93 +45,98 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children:[
+          children: [
             const SizedBox(height: 10),
-
             TextField(
-              controller:nameController,
-              decoration: InputDecoration(
+              controller: nameController,
+              decoration: const InputDecoration(
                   hintText: 'Contact Name',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  )
-              ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
             const SizedBox(height: 10),
             TextField(
-              controller:contactController ,
+              controller: contactController,
               keyboardType: TextInputType.number,
               maxLength: 10,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: 'Contact Number',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  )
-              ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(onPressed:()
-                {
-                  String name = nameController.text.trim();
-                  String contact = contactController.text.trim();
+                ElevatedButton(
+                    onPressed: () {
+                      String name = nameController.text.trim();
+                      String contact = contactController.text.trim();
 
-                  if(name.isNotEmpty && contact.isNotEmpty)
-
-                  {
-                    setState(() {
-                      nameController.text = "";
-                      contactController.text = "";
-                      contacts.add(Contact(name: name, contact: contact));
-                    });
-                  }
-                },
+                      if (name.isNotEmpty && contact.isNotEmpty) {
+                        setState(() {
+                          nameController.text = "";
+                          contactController.text = "";
+                          contacts.add(Contact(name: name, contact: contact));
+                        });
+                      }
+                    },
                     child: Text('Save')),
-                ElevatedButton(onPressed:() {},
-                    child: Text('Update')),
+                ElevatedButton(onPressed: () {}, child: Text('Update')),
               ],
             ),
-            SizedBox(height: 10),
-
-            contacts.isEmpty? const Text("No Contact Yet..",style: TextStyle(fontSize: 17),
-            ):
-            Expanded(
-              child: ListView.builder(
-                itemCount: contacts.length,
-                itemBuilder: (context,index)=> getRow(index),
-              ),
-            )
+            const SizedBox(height: 10),
+            contacts.isEmpty
+                ? const Text(
+                    "No Contact Yet..",
+                    style: TextStyle(fontSize: 17),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: contacts.length,
+                      itemBuilder: (context, index) => getRow(index),
+                    ),
+                  )
           ],
         ),
       ),
     );
   }
-  Widget getRow(int index){
+
+  Widget getRow(int index) {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: index%2==0 ? Colors.deepPurple: Colors.purple,
+          backgroundColor: index % 2 == 0 ? Colors.deepPurple : Colors.purple,
           child: Text(contacts[index].name[0]),
         ),
         title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(contacts[index].name),
-            Text(contacts[index].contact)
+            Text(contacts[index].contact),
           ],
         ),
-        trailing:SizedBox(width: 70),
-          child:
-          Row(
-          children: const [
-            Icon(Icons.edit),
-            Icon(Icons.delete),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                // Implement edit functionality here
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                setState(() {
+                  contacts.removeAt(index);
+                });
+              },
+            ),
           ],
         ),
       ),
     );
-
   }
 }
-
