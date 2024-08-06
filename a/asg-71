@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,39 +24,34 @@ class NavigationDrawer extends StatefulWidget {
   State<NavigationDrawer> createState() => _NavigationDrawerState();
 }
 
-class _NavigationDrawerState extends State<NavigationDrawer>
-{
+class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar:AppBar(title: Text("Navigation Drawer Example"),),
-      body:const Center(
-
-        child:  Text
-          (
+      appBar: AppBar(
+        title: Text("Navigation Drawer Example"),
+        backgroundColor: Colors.lightGreen,
+      ),
+      body: const Center(
+        child: Text(
           'A drawer is an invisible side screen.',
           style: TextStyle(fontSize: 20.0),
         ),
-      ),drawer: Drawer(
-
-      child: ListView(
-
-        children: [
-
-           const UserAccountsDrawerHeader(
-
-            accountName:  Text("Abhishek Mishra"),
-            accountEmail: Text("abhishek@gmail.com"),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.orange,
-              child: Text(
-                "A",
-                style: TextStyle(fontSize: 40.0),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const UserAccountsDrawerHeader(
+              accountName: Text("Ashra"),
+              accountEmail: Text("ashra@gmail.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.orange,
+                child: Text(
+                  "A",
+                  style: TextStyle(fontSize: 40.0),
+                ),
               ),
             ),
-
-          ),
             ListTile(
               leading: const Icon(Icons.audiotrack_outlined),
               title: const Text("AudioPage"),
@@ -84,7 +78,6 @@ class _NavigationDrawerState extends State<NavigationDrawer>
               leading: const Icon(Icons.image_outlined),
               title: const Text("ImagesPage"),
               onTap: () {
-
                 Navigator.pop(context);
                 Navigator.push(
                   context,
@@ -97,142 +90,77 @@ class _NavigationDrawerState extends State<NavigationDrawer>
       ),
     );
   }
-
-}
-
-/*class ImagesPage extends StatelessWidget {
-  const ImagesPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Dummy image data
-    final List<Map<String, String>> imageData = [
-      {"title": "Image 1", "description": "Description 1"},
-      {"title": "Image 2", "description": "Description 2"},
-      {"title": "Image 3", "description": "Description 3"},
-      {"title": "Image 4", "description": "Description 4"},
-      {"title": "Image 5", "description": "Description 5"},
-    ];
-
-    return ListView.builder(
-      itemCount: imageData.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const Icon(Icons.image, color: Colors.teal),
-          title: Text(imageData[index]['title']!,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          subtitle: Text(imageData[index]['description']!,
-              style: const TextStyle(fontSize: 16, color: Colors.grey)),
-        );
-      },
-    );
-  }
 }
 
 class AudioPage extends StatelessWidget {
-  const AudioPage({super.key});
+  const AudioPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Dummy audio data
-    final List<Map<String, String>> audioData = [
-      {"title": "Song 1", "artist": "Artist 1"},
-      {"title": "Song 2", "artist": "Artist 2"},
-      {"title": "Song 3", "artist": "Artist 3"},
-      {"title": "Song 4", "artist": "Artist 4"},
-      {"title": "Song 5", "artist": "Artist 5"},
-    ];
-
-    return ListView.builder(
-      itemCount: audioData.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const Icon(Icons.music_note, color: Colors.teal),
-          title: Text(audioData[index]['title']!,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          subtitle: Text(audioData[index]['artist']!,
-              style: const TextStyle(fontSize: 16, color: Colors.grey)),
-        );
-      },
+    return Scaffold(
+      body: ListView.separated(
+        itemCount: 10,
+        separatorBuilder: (context, index) => Divider(
+          color: Colors.grey,
+          height: 2,
+          thickness: 2,
+        ),
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.audiotrack),
+            title: Text('Audio Track $index'),
+            subtitle: Text('This is the detail of audio track $index'),
+          );
+        },
+      ),
     );
   }
 }
 
 class VideoPage extends StatelessWidget {
-  const VideoPage({super.key});
+  const VideoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Dummy video data
-    final List<Map<String, String>> videoData = [
-      {"title": "Video 1", "description": "Description 1"},
-      {"title": "Video 2", "description": "Description 2"},
-      {"title": "Video 3", "description": "Description 3"},
-      {"title": "Video 4", "description": "Description 4"},
-      {"title": "Video 5", "description": "Description 5"},
-    ];
-
-    return ListView.builder(
-      itemCount: videoData.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const Icon(Icons.videocam, color: Colors.teal),
-          title: Text(videoData[index]['title']!,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          subtitle: Text(videoData[index]['description']!,
-              style: const TextStyle(fontSize: 16, color: Colors.grey)),
-        );
-      },
+    return Scaffold(
+      body: ListView.separated(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.videocam),
+            title: Text('Video $index'),
+            subtitle: Text('This is the detail of video $index'),
+          );
+        },
+        separatorBuilder: (context, index) => Divider(
+          color: Colors.grey,
+          height: 2,
+          thickness: 2,
+        ),
+      ),
     );
   }
-}*/
+}
+
 class ImagesPage extends StatelessWidget {
+  const ImagesPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ImagesPage'),
-      ),
-      body: Center(
-
-
-        child: Text('This is Images Page '),
-
-
-      ),
-    );
-  }
-}
-
-class AudioPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Audio Page'),
-
-      ),
-      body: Center(
-        child:Column(
-          children: [
-            Text(' This is Audio Page '),
-
-
-
-      ]),
-    ));
-  }
-}
-
-class VideoPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Video Page'),
-      ),
-      body: Center(
-        child: Text(' This is Video Page '),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemBuilder: (context, index) {
+          return Card(
+            child: Image.network(
+              'https://placehold.jp/3d4070/ffffff/150x150.png?css=%7B%22border-radius%22%3A%2215px%22%7D',
+              fit: BoxFit.cover,
+            ),
+          );
+        },
+        itemCount: 20,
       ),
     );
   }
