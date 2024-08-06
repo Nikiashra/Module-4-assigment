@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void main()
-{
-  runApp( const MyApp());
+void main() {
+  runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: CallPage(),
     );
-
   }
 }
 
@@ -31,52 +30,75 @@ class _CallPageState extends State<CallPage> {
   @override
   void initState() {
     super.initState();
-    _requestCallPermission();
+    _checkPermission();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Call App")
-
+        title: const Text("Call App"),
+        backgroundColor: Colors.orangeAccent,
       ),
       body: const Center(
-        child: Text("Make Call Permission"),
+        child: Text("Wel Come to Call Permission App",),
       ),
     );
   }
 
-  Future <void> _requestCallPermission() async
-  {
-    var status = await Permission.phone.request();
-    if (status.isGranted)
-    {
-
+  Future<void> _checkPermission() async {
+    PermissionStatus status = await Permission.phone.status;
+    if (status != PermissionStatus.granted) {
+      _showPermissionDialog();
     }
-    else if(status.isDenied)
-      {
-        showDialog(context: context,
-          builder:(BuildContext context) => AlertDialog(
-               title: const Text('Permission Required'),
-
-                content: const Text('This App Required Call Permission'),
-                actions: <Widget>[
-                  TextButton(onPressed: ()=> Navigator.of(context).pop(),
-                      child: const Text('Deny'),),
-                  TextButton(
-                    onPressed: () {
-                      // Open app settings
-                      openAppSettings();
-                    },
-                    child: const Text('Allow in Settings'),
-                  ),
-
-
-                ],
-            ),
-        );
-
-      }
   }
 
+  void _showPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PermissionDialog(
+          onAllow: () async {
+            Navigator.of(context).pop();
+            openAppSettings();
+          },
+          onDeny: () {
+            Navigator.of(context).pop();
+            _handlePermissionDenied();
+          },
+        );
+      },
+    );
+  }
+
+  void _handlePermissionDenied() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+          content: Text('Permission denied. You cannot make phone calls.')),
+    );
+  }
+}
+
+class PermissionDialog extends StatelessWidget {
+  final VoidCallback onAllow;
+  final VoidCallback onDeny;
+
+  PermissionDialog({required this.onAllow, required this.onDeny});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Permission Required'),
+      content: Text('This app needs phone call permissions to proceed.'),
+      actions: [
+        ElevatedButton(
+          onPressed: onDeny,
+          child: Text('Deny'),
+        ),
+        ElevatedButton(
+          onPressed: onAllow,
+          child: Text('Allow'),
+        ),
+      ],
+    );
+  }
 }
