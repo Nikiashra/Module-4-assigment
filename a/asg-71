@@ -63,6 +63,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 );
               },
             ),
+            const Divider(thickness: 2, color: Colors.black, height: 2),
             ListTile(
               leading: const Icon(Icons.videocam_outlined),
               title: const Text("VideoPage"),
@@ -74,6 +75,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 );
               },
             ),
+            const Divider(thickness: 2, color: Colors.black, height: 2),
             ListTile(
               leading: const Icon(Icons.image_outlined),
               title: const Text("ImagesPage"),
@@ -85,6 +87,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 );
               },
             ),
+            const Divider(thickness: 2, color: Colors.black, height: 2),
           ],
         ),
       ),
